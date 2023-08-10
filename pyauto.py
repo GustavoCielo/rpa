@@ -16,7 +16,7 @@ import pandas as pd
 def main():
     url = 'https://dejt.jt.jus.br/dejt/f/n/diariocon'
     option = Options()
-    option.add_argument('--headless') # here shows the browser opening, can set to true to run in background
+    # option.add_argument('--headless') # here shows the browser opening, can set to true to run in background
     driver = webdriver.Chrome(options=option)
 
     """finding current date to get last weeks result"""
@@ -85,7 +85,7 @@ def main():
     """
     # name must be dynamic
     regex = re.compile("[0-9]{7}[-]?[0-9]{2}[.]?[0-9]{4}[.]?[0-9]{1}[.]?[0-9]{2}[.]?[0-9]{4}")
-    pdf_to_read = 'C:/Users/User/Downloads/Diario_3775__28_7_2023.pdf'
+    pdf_to_read = 'C:/Users/User/Downloads/Diario_3780__4_8_2023.pdf'
     for i in range(0, 30):
         with open(pdf_to_read, 'rb') as f:
             # starts a reader to be able to manipulate pdf
@@ -104,9 +104,9 @@ def main():
                 page_content = page.extract_text()
                 res_search = regex.findall(page_content)
                 for value in res_search:
-                    results.add(value)
                     if value in results:
                         duplicates.add(value)
+                    results.add(value)
 
             df = pd.DataFrame(results)
             df_dup = pd.DataFrame(duplicates)
@@ -129,7 +129,7 @@ def main():
                         df_dup.to_excel(writer, index=False, header=False)
             
             # name must be dynamic
-            pdf_to_read = r"C:\Users\User\Downloads\Diario_3775__28_7_2023 ({}).pdf".format(i+1)
+            pdf_to_read = r"C:\Users\User\Downloads\Diario_3780__4_8_2023 ({}).pdf".format(i+1)
 
     print('RPA done')
 
